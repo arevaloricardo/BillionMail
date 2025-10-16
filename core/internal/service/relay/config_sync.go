@@ -600,8 +600,30 @@ func reloadPostfixConfigs(ctx context.Context) error {
 		return gerror.Wrap(err, "Failed to connect to Docker service")
 	}
 	defer dk.Close()
+
+	senderRelayMapsPrimaryPath := path.Join(postfixConfigDir, senderRelayMapsPrimaryFile)
+	saslPasswdPrimaryPath := path.Join(postfixConfigDir, saslPasswdPrimaryFile)
+
+	if !gfile.Exists(senderRelayMapsPrimaryPath) {
+		if err := gfile.PutContents(senderRelayMapsPrimaryPath, ""); err != nil {
+			g.Log().Errorf(ctx, "Failed to create %s: %v", senderRelayMapsPrimaryPath, err)
+		} else {
+			g.Log().Infof(ctx, "Created empty sender_relay_maps_primary file")
+		}
+	}
+
+	if !gfile.Exists(saslPasswdPrimaryPath) {
+		if err := gfile.PutContents(saslPasswdPrimaryPath, ""); err != nil {
+			g.Log().Errorf(ctx, "Failed to create %s: %v", saslPasswdPrimaryPath, err)
+		} else {
+			g.Log().Infof(ctx, "Created empty sasl_passwd_primary file")
+		}
+	}
+
 	// List of commands to run
 	cmdsToRun := [][]string{
+		{"postmap", "/etc/postfix/conf/sender_relay_maps_primary"},
+		{"postmap", "/etc/postfix/conf/sasl_passwd_primary"},
 		{"postmap", "/etc/postfix/conf/sasl_passwd"},
 		{"postfix", "reload"},
 	}

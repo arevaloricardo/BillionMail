@@ -140,11 +140,12 @@ type ApiTemplatesDeleteRes struct {
 }
 
 type ApiMailSendReq struct {
-	g.Meta    `path:"/batch_mail/api/send" method:"post" tags:"ApiMail" summary:"call api send mail"`
-	ApiKey    string            `json:"x-api-key" dc:"API Key" in:"header"`
-	Addresser string            `json:"addresser" dc:"addresser"`
-	Recipient string            `json:"recipient" dc:"recipient"`
-	Attribs   map[string]string `json:"attribs" dc:"Custom properties"`
+	g.Meta        `path:"/batch_mail/api/send" method:"post" tags:"ApiMail" summary:"call api send mail"`
+	Authorization string            `json:"authorization" dc:"Authorization" in:"header"`
+	ApiKey        string            `json:"x-api-key" dc:"API Key" in:"header"`
+	Addresser     string            `json:"addresser" dc:"addresser"`
+	Recipient     string            `json:"recipient" dc:"recipient"`
+	Attribs       map[string]string `json:"attribs" dc:"Custom properties"`
 }
 
 type ApiMailSendRes struct {
@@ -152,11 +153,12 @@ type ApiMailSendRes struct {
 }
 
 type ApiMailBatchSendReq struct {
-	g.Meta     `path:"/batch_mail/api/batch_send" method:"post" tags:"ApiMail" summary:"call api batch send mail"`
-	ApiKey     string            `json:"x-api-key" dc:"API Key" in:"header"`
-	Addresser  string            `json:"addresser" dc:"addresser"`
-	Recipients []string          `json:"recipients" dc:"recipients"`
-	Attribs    map[string]string `json:"attribs" dc:"Custom properties"`
+	g.Meta        `path:"/batch_mail/api/batch_send" method:"post" tags:"ApiMail" summary:"call api batch send mail"`
+	Authorization string            `json:"authorization" dc:"Authorization" in:"header"`
+	ApiKey        string            `json:"x-api-key" dc:"API Key" in:"header"`
+	Addresser     string            `json:"addresser" dc:"addresser"`
+	Recipients    []string          `json:"recipients" dc:"recipients"`
+	Attribs       map[string]string `json:"attribs" dc:"Custom properties"`
 }
 
 type ApiMailBatchSendRes struct {

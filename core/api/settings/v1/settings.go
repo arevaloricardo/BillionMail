@@ -88,15 +88,16 @@ type SystemConfig struct {
 
 	// API configuration
 	APIDocSwagger struct {
-		APIDocURL      string `json:"api_doc_url" dc:"api doc url"`
-		SwaggerURL     string `json:"swagger_url" dc:"swagger url"`
-		APIDocEnabled    bool   `json:"api_doc_enabled" dc:"enable API documentation and Swagger UI"`
-		APIToken       string `json:"api_token" dc:"API access token"`
+		APIDocURL     string `json:"api_doc_url" dc:"api doc url"`
+		SwaggerURL    string `json:"swagger_url" dc:"swagger url"`
+		APIDocEnabled bool   `json:"api_doc_enabled" dc:"enable API documentation and Swagger UI"`
+		APIToken      string `json:"api_token" dc:"API access token"`
 	} `json:"api_doc_swagger" dc:"API doc and Swagger UI configuration"`
 }
 
 type GetVersionReq struct {
-	g.Meta `path:"/settings/get_version" tags:"Version" method:"get" summary:"Get current version information" in:"query"`
+	g.Meta        `path:"/settings/get_version" tags:"Version" method:"get" summary:"Get current version information" in:"query"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
 }
 
 type GetVersionRes struct {
@@ -111,7 +112,8 @@ type GetVersionRes struct {
 
 // Get system configuration request
 type GetSystemConfigReq struct {
-	g.Meta `path:"/settings/get_system_config" tags:"Settings" method:"get" summary:"Get system configuration"`
+	g.Meta        `path:"/settings/get_system_config" tags:"Settings" method:"get" summary:"Get system configuration"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
 }
 
 // Get system configuration response
@@ -122,7 +124,8 @@ type GetSystemConfigRes struct {
 
 // Set system configuration request
 type SetSystemConfigReq struct {
-	g.Meta `path:"/settings/set_system_config" tags:"Settings" method:"post" summary:"Set system configuration"`
+	g.Meta        `path:"/settings/set_system_config" tags:"Settings" method:"post" summary:"Set system configuration"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
 	SystemConfig
 }
 
@@ -133,9 +136,10 @@ type SetSystemConfigRes struct {
 
 // Set system configuration request
 type SetSystemConfigKeyReq struct {
-	g.Meta `path:"/settings/set_system_config_key" tags:"Settings" method:"post" summary:"Set system configuration"`
-	Key    string `json:"key" dc:"configuration key"`
-	Value  string `json:"value" dc:"configuration value"`
+	g.Meta        `path:"/settings/set_system_config_key" tags:"Settings" method:"post" summary:"Set system configuration"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
+	Key           string `json:"key" dc:"configuration key"`
+	Value         string `json:"value" dc:"configuration value"`
 }
 
 type SetSystemConfigKeyRes struct {
@@ -144,9 +148,10 @@ type SetSystemConfigKeyRes struct {
 
 // Set SSL certificate request
 type SetSSLConfigReq struct {
-	g.Meta   `path:"/settings/set_ssl_config" tags:"Settings" method:"post" summary:"Set SSL certificate configuration"`
-	CertData string `json:"certPem" dc:"certificate data"`
-	KeyData  string `json:"privateKey" dc:"private key data"`
+	g.Meta        `path:"/settings/set_ssl_config" tags:"Settings" method:"post" summary:"Set SSL certificate configuration"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
+	CertData      string `json:"certPem" dc:"certificate data"`
+	KeyData       string `json:"privateKey" dc:"private key data"`
 }
 
 type SetSSLConfigRes struct {
@@ -154,7 +159,8 @@ type SetSSLConfigRes struct {
 }
 
 type GetTimeZoneListReq struct {
-	g.Meta `path:"/settings/get_timezone_list" tags:"Settings" method:"get" summary:"Get available time zones"`
+	g.Meta        `path:"/settings/get_timezone_list" tags:"Settings" method:"get" summary:"Get available time zones"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
 }
 type GetTimeZoneListRes struct {
 	api_v1.StandardRes
@@ -162,8 +168,9 @@ type GetTimeZoneListRes struct {
 }
 
 type SetIPWhitelistReq struct {
-	g.Meta `path:"/settings/set_ip_whitelist" tags:"Settings" method:"post" summary:"Set IP whitelist"`
-	IPList []string `json:"ip_list" dc:"IP list"`
+	g.Meta        `path:"/settings/set_ip_whitelist" tags:"Settings" method:"post" summary:"Set IP whitelist"`
+	Authorization string   `json:"authorization" dc:"Authorization" in:"header"`
+	IPList        []string `json:"ip_list" dc:"IP list"`
 }
 
 type SetIPWhitelistRes struct {
@@ -171,8 +178,9 @@ type SetIPWhitelistRes struct {
 }
 
 type DeleteIPWhitelistReq struct {
-	g.Meta `path:"/settings/delete_ip_whitelist" tags:"Settings" method:"post" summary:"Delete IP whitelist"`
-	ID     int `json:"id" dc:"ID"`
+	g.Meta        `path:"/settings/delete_ip_whitelist" tags:"Settings" method:"post" summary:"Delete IP whitelist"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
+	ID            int    `json:"id" dc:"ID"`
 }
 
 type DeleteIPWhitelistRes struct {
@@ -180,8 +188,9 @@ type DeleteIPWhitelistRes struct {
 }
 
 type AddIPWhitelistReq struct {
-	g.Meta `path:"/settings/add_ip_whitelist" tags:"Settings" method:"post" summary:"Add IP whitelist"`
-	IP     string `json:"ip" dc:"IP"`
+	g.Meta        `path:"/settings/add_ip_whitelist" tags:"Settings" method:"post" summary:"Add IP whitelist"`
+	Authorization string `json:"authorization" dc:"Authorization" in:"header"`
+	IP            string `json:"ip" dc:"IP"`
 }
 
 type AddIPWhitelistRes struct {

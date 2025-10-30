@@ -531,13 +531,12 @@ func (c *Certificate) getSSLInfoFromFiles(domain string) (certInfo v1.CertInfo, 
 	keyPath := filepath.Join(consts.SSL_PATH, domain, "/privkey.pem")
 
 	if !c.checkCertificateFiles(csrPath, keyPath) {
-		err = fmt.Errorf("certificate files do not exist")
-		return certInfo,err
+		return certInfo, nil
 	}
 
 	crtPem, err := public.ReadFile(csrPath)
 	if err != nil {
-		return certInfo,err
+		return certInfo, err
 	}
 
 	// Get certificate information
@@ -547,7 +546,7 @@ func (c *Certificate) getSSLInfoFromFiles(domain string) (certInfo v1.CertInfo, 
 		certInfo.CertPem = crtPem
 		certInfo.KeyPem, err = public.ReadFile(keyPath)
 		if err != nil {
-			return certInfo,err
+			return certInfo, err
 		}
 	}
 

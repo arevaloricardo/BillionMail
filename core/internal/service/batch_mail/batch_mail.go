@@ -631,6 +631,7 @@ func UpdateTaskJoinMailstat(ctx context.Context) {
 	var tasksToUpdate []*entity.EmailTask
 	err := g.DB().Model("email_tasks").
 		Where("task_process IN (?)", []int{1, 3}).
+		WhereOr("task_process = 2 AND stats_update_time > ?", time.Now().Unix()-36*3600).
 		WhereOr("task_process = 2 AND sends_count < recipient_count*0.99").
 		WhereOr("stats_update_time", 0).
 		Order("id DESC").
